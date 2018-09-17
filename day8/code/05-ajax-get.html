@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ajax发送get请求并传递参数</title>
+</head>
+<body>
+	<ul id="list"></ul>
+	<script type="text/javascript">
+		var listObj=document.getElementById('list');
+		var xhr=new XMLHttpRequest();
+		xhr.open('GET','05-users.php');
+		xhr.send(null);
+		xhr.onreadystatechange=function () {
+			if (this.readyState!=4) return;
+			var data=JSON.parse(this.responseText);
+			for (var i = 0; i < data.length; i++) {
+				var liObj=document.createElement("li");
+				liObj.innerHTML=data[i].name;
+				liObj.id=data[i].id;
+				listObj.appendChild(liObj);
+				liObj.onclick=function(){
+					var xhr=new XMLHttpRequest();
+					xhr.open('GET','05-users.php?id='+this.id);
+					xhr.send(null);
+					xhr.onreadystatechange=function () {
+					if (this.readyState!=4) return;
+					var data=JSON.parse(this.responseText);
+					alert(data['age']);
+				}
+			}
+		}
+	}	
+	</script>
+</body>
+</html>

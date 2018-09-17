@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+            <title>
+                jsonp综合实例
+            </title>
+            <link href="nprogress.css" rel="stylesheet">
+            </link>
+        </meta>
+    </head>
+    <body>
+    	<table id="tb">
+    	</table>
+    </body>
+    <script src="jquery-1.12.4.js">
+    </script>
+    <script src="nprogress.js">
+    </script>
+    <script src="template-web.js">
+    </script>
+    <script type="application/x-art-tmpl" id="tmpl">
+    	<thead>
+    		<th>id</th>
+    		<th>name</th>
+    		<th>gender</th>
+    	</thead>
+    	{{each $data.users}}
+    	<tr>
+    		<td>{{$value.id}}</td>
+    		<td>{{$value.name}}</td>
+    		<td>{{$value.gender}}</td>
+    	</tr>
+    	{{/each}}
+    </script>
+    <script>
+    	//跨域解决方案
+    	//方案一：jsonp
+        //封装jsonp
+	function jsonp(url,parameters,callback) {
+		// body...
+		var fname='jsonp'+Date.now()+Math.random().toString().substring(2);
+		var script=document.createElement('script');
+		script.src=url+'?callback='+fname;
+		NProgress.start();//加载条开始
+		document.getElementsByTagName('body')[0].appendChild(script);
+		window[fname]=function(res){
+			callback(res);
+			document.body.removeChild(script);
+			delete window[fname];
+		};
+	}
+	jsonp('http://day8.io/day10-jsonp.php',null,function(res){
+		var data={users:res};
+		var html=template('tmpl',data);
+		document.getElementById('tb').innerHTML=html;
+		NProgress.done();
+	});
+    </script>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jquery中的ajax</title>
+</head>
+<body>
+	<script src="jquery-1.12.4.js"></script>
+	<script type="text/javascript">
+		$.ajax({
+			url:'test-json.php',//请求服务的地址
+			type:'get',//请求的方法，不区分大小写
+			data:{id:1,name:'zhangsan'},//传给服务器的参数，会自动根据请求方法匹配对应的content-type
+			dataType:'json',//用于设置以什么样的方式处理响应体的内容，跟服务端设置的相应体的格式无关
+			success:function(res){
+				//参数res是响应体的内容
+				console.log(res);
+			}
+		});
+	</script>
+</body>
+</html>

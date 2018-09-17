@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>readystate状态的转变</title>
+</head>
+<body>
+	<script type="text/javascript">
+		var xhr=new XMLHttpRequest();
+		console.log(xhr.readyState);//=>0
+		//this.readyState=0---初始化，请求代理对象
+		xhr.open('GET','time.php');
+		console.log(xhr.readyState);//=>1
+		//open（）方法已调用，建立与服务器特定端口的连接
+		xhr.send();
+		console.log(xhr.readyState);//=>1
+		//因为客户端永远都不知道服务端何时才能返回我们需要的响应
+		//所以AJAX api采用事件机制
+		xhr.onreadystatechange=function(){
+			//这个事件表示xhr的状态改变就触发
+			switch(this.readyState){
+				case 2:
+				//send()方法已经调用，可以获取到响应头
+				console.log(this.getAllResponseHeaders());//获取所有的响应头
+				console.log(this.getResponseHeader('server'));//获取指定的响应头
+				break;
+				case 3:
+				//正在下载响应报文的响应体，有可能响应体不完整或者为空，所以在这里处理响应体不安全
+				console.log(this.responseText);
+				break;
+				case 4:
+				//一切ok（响应报文已经完整的下载下来）
+				console.log(this.responseText);
+				break;
+
+			}
+		}
+	</script>
+</body>
+</html>

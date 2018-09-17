@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ajax 动态表格渲染</title>
+</head>
+<body>
+	<table id="tb"></table>
+	<!-- script 标签的特点
+	1，innnerHTML 永远都不会执行
+	2，script type属性不是text/javascript时，这个标签的内容不会被执行
+	3，借助script写模板的原因
+		1，写在js中不方便（维护，换行）
+		2，script中内容默认隐藏
+		3，改变其type会不按js语法执行
+	 -->
+	 <script src="template-web.js"></script>
+	 <script type="text/x-art-template" id="tmpl">
+	 	{{each $data.comments val}}
+	 	<tr>
+			<td>{{val.author}}</td>
+	 		<td>{{val.content}}</td>
+	 		<td>{{val.created}}</td>
+	 	</tr>
+	 	{{/each}}
+	</script>
+	<script type="text/javascript">
+		var hxr=new XMLHttpRequest();
+		hxr.open('POST','test.php');
+		hxr.send(null);
+		hxr.onreadystatechange=function () {
+			if (this.readyState!=4) return;
+			var data=JSON.parse(this.responseText).data;
+			//准备模版所需数据,因为API template（）的第二参数传入对象时会返回字符串，传入字符串时会返回函数
+			//所以定义一个对象来存放需要渲染的数据
+			var context={comments:data};
+			//借助模版引擎API渲染数据
+			var html=template('tmpl',context);
+			document.getElementById('tb').innerHTML=html;
+		}
+	</script>
+</body>
+</html>

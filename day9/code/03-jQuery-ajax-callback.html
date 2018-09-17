@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jquery中的ajax</title>
+</head>
+<body>
+	<script src="jquery-1.12.4.js"></script>
+	<script type="text/javascript">
+		$.ajax({
+			url:'test-json.php',
+			type:'get',
+			data:{id:1,name:'zhangsan'},
+			dataType:'json',
+			success:function(res){
+				console.log(res);
+			},
+			error:function(xhr){
+				console.log(xhr);//当请求发生错误时会触发事件
+			},
+			complete:function(xhr){
+				console.log(xhr);//不管是请求失败还是成功都会触发这个事件
+			},
+			beforeSend:function(xhr){
+				console.log(xhr);//在请求响应之前执行，即在open（），send（）之前执行
+			}
+		});
+	</script>
+</body>
+</html>

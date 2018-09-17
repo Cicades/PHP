@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>AJAX快速上手</title>
+</head>
+<body>
+	<script type="text/javascript">
+		var xhr=new XMLHttpRequest();
+		xhr.open('GET','time.php');
+		xhr.send();
+		//因为客户端永远都不知道服务端何时才能返回我们需要的响应
+		//所以AJAX api采用事件机制
+		xhr.onreadystatechange=function(){
+			//这个事件表示xhr的状态改变就触发
+			if (this.readyState!==4) return;
+			//获取响应的内容
+			console.log(this.responseText);
+		}
+	</script>
+</body>
+</html>

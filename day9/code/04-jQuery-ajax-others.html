@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jquery中的ajax</title>
+</head>
+<body>
+	<script src="jquery-1.12.4.js"></script>
+	<script type="text/javascript">
+		$.get('test-json.php',{id:1},function(res){
+			console.log(res);
+		});//get请求
+		$.post('test-json.php',{id:1},function(res){
+			console.log(res);
+		});//post请求
+		$.getJSON('test-json.php',{id:1},function(res){
+			console.log(res);
+		});//直接将请求体的格式转换为JSON
+	</script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ajax onload事件</title>
+</head>
+<body>
+	<script type="text/javascript">
+		var xhr=new XMLHttpRequest();
+		xhr.open('GET','time.php');
+		xhr.send(null);//可以传参数设置响应体
+		//onload 是HTML5中提供的XMLHttpRequest v2.0定义的
+		//所以可能会存在兼容性的问题
+		xhr.onload=function(){
+			console.log(this.readyState);//=>4
+			console.log(this.responseText);
+		}
+	</script>
+</body>
+</html>

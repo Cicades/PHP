@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ajax-post传值</title>
+</head>
+<body>
+	<table>
+		<p id="message"></p>
+		<tr>
+			<td>用户名：</td>
+			<td><input type="text" id="name"></td>
+		</tr>
+		<tr>
+			<td>密码：</td>
+			<td><input type="text" id="password"></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><input type="submit" value="提交" id="submit"></td>
+		</tr>
+	</table>
+	<script type="text/javascript">
+		var nameObj=document.getElementById('name');
+		var passwordObj=document.getElementById('password');
+		submit.onclick=function(){
+			var name=nameObj.value;
+			var password=passwordObj.value;
+			var xhr=new XMLHttpRequest();
+			xhr.open('POST','06-login.php');
+			xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+			xhr.send(`name=${name}&password=${password}`);
+			xhr.onreadystatechange=function(){
+				if (this.readyState!=4) return;
+				message.innerHTML=this.responseText;
+			}
+		}
+	</script>
+</body>
+</html>
